@@ -28,6 +28,10 @@ var mainState = {
 		
 		//Add gravity to the bird to make it fall
 		this.bird.body.gravity.y = 1000;
+        
+        // New anchor position
+
+this.bird.anchor.setTo(-0.2, 0.5);
 		
 		//Call 'jump' function when the spacebar is pressed
 		var spaceBar = game.input.keyboard.addKey(
@@ -56,11 +60,49 @@ this.labelScore = game.add.text(20, 20, "0",
 		//Call the 'restartGame' function
 		if (this.bird.y <0 || this.bird.y > 490)
 			this.restartGame();
+        
+        // Slowly rotate the bird downward, up to a certain point
+
+if (this.bird.angle < 20)
+
+this.bird.angle += 1;
 	},
 	
 	jump: function() {
 		//Add a vertical velocity to the bird
 		this.bird.body.velocity.y = -350;
+        
+        //Simplified code for upward flying animation
+
+game.add.tween(this.bird).to({angle: -20}, 100).start();
+        
+        hitPipe: function() {
+
+//If the bird has already hit a pipe, do nothing
+
+//It means the bird is already falling off the screen
+
+if (this.bird.alive == false)
+
+return;
+
+//Set the alive property of the bird to false
+
+this.bird.alive = false;
+
+//Prevent new pipes from appearing
+
+game.time.events.remove(this.timer);
+
+//Go through all the pipes, and stop their movement
+
+this.pipes.forEach(function(p){
+
+p.body.velocity.x = 0;
+
+}, this);
+
+},
 	},
 	
 	//Restart the game
@@ -70,7 +112,7 @@ this.labelScore = game.add.text(20, 20, "0",
         
         //calls the restartGame function each time the bird dies
 
-game.physics.arcade.overlap(this.bird, this.pipes, this.restartGame,
+game.physics.arcade.overlap(this.bird, this.pipes, this.hitPipe,
 
 null, this);
 	},
