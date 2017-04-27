@@ -3,11 +3,17 @@ var mainStage = {
     preload: function() {
         //this function will be executed at the begining
         //thats where we load the images and the sound
+        
+        //load the bird sprite
+        game.load.image('bird', 'assets/bird.png');
     },
     
     create: function() {
         //this function is called after the preload functioin
         //here we setup the game, display sprites, etc...
+        
+        //change the background colour of the game to blue - for now
+        game.stage.backgroundColor = '#71c5cf';
     },
     
     update: function() {
