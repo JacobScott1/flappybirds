@@ -14,11 +14,44 @@ var mainStage = {
         
         //change the background colour of the game to blue - for now
         game.stage.backgroundColor = '#71c5cf';
+        
+        //set the physics for the game
+        game.physics.startSystem(Phaser.Physics.ARCADE);
+        
+        //display the bird at the position of x=100 and y=245
+        this.bird = game.add.sprite(100, 245, 'bird');
+        
+        //add physics to the bird
+        //needed for: movement, gravity, collisions, etc...
+        game.physics.arcade.enable(this.bird);
+        
+        //add gravity to the bird to make it fall
+        this.bird.body.gravity.y = 1000;
+        
+        //call 'jump' function when the spacebar is pressed
+        var spaceBar = game.input.keyboard.addKey(
+                        Phaser.Keyboard.SPACEBAR);
+        spaceBar.onDOWN.add(this.jump, this);
     },
     
     update: function() {
     //this function is called 60 times per second
         //it contains the games logic
+        
+        //call the 'restartGame' funtion
+        if(this.bird.y <0 || this.bird.y > 490)
+            this.restartGame();
+    },
+    
+    jump: function() {
+        //add a vertical velocity to the bird
+        this.bird.body.velocity.y = -350;
+    },
+    
+    //restart the game
+    resartGame: function() {
+        //start the 'main' state which restarts game
+    game.state.start('main');
     },
 };
 
