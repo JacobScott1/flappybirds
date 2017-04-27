@@ -76,7 +76,10 @@ this.bird.angle += 1;
 
 game.add.tween(this.bird).to({angle: -20}, 100).start();
         
-        hitPipe: function() {
+        
+	},
+    
+    hitPipe: function() {
 
 //If the bird has already hit a pipe, do nothing
 
@@ -103,7 +106,6 @@ p.body.velocity.x = 0;
 }, this);
 
 },
-	},
 	
 	//Restart the game
 	restartGame: function() {
